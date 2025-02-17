@@ -1,0 +1,61 @@
+[tool.poetry]
+name = "paper-lexcare"
+version = "0.1.0"
+description = ""
+authors = ["Elias Jacob <elias.jacob@ufrn.br>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python =  ">=3.12,<3.13"
+
+# ===========================================
+# =========== START OF TORCH PART ===========
+# poetry install --sync --extras=cuda --with cuda
+
+torch       = { version = "^2.6.0", source = "pytorch-cpu", markers = "extra=='cpu' and extra!='cuda'" }
+torchvision = { version = "^0.21", source = "pytorch-cpu", markers = "extra=='cpu' and extra!='cuda'" }
+torchaudio  = { version = "^2.6.0", source = "pytorch-cpu", markers = "extra=='cpu' and extra!='cuda'" }
+langchain = "^0.3.18"
+langchain-community = "^0.3.17"
+langchain-ollama = "^0.2.3"
+langchain-openai = "^0.3.6"
+pandas = "^2.2.3"
+xlsxwriter = "^3.2.2"
+fastparquet = "^2024.11.0"
+ipykernel = "^6.29.5"
+ruff = "^0.9.6"
+ipywidgets = "^8.1.5"
+openai = "^1.63.2"
+openpyxl = "^3.1.5"
+
+
+[tool.poetry.group.cuda]
+optional = true
+
+# https://github.com/pytorch/pytorch/blob/main/RELEASE.md#release-compatibility-matrix
+[tool.poetry.group.cuda.dependencies]
+torch       = { version = "^2.6.0", source = "pytorch-cuda", markers = "extra=='cuda' and extra!='cpu'" }
+torchvision = { version = "^0.21", source = "pytorch-cuda", markers = "extra=='cuda' and extra!='cpu'" }
+torchaudio  = { version = "^2.6.0", source = "pytorch-cuda", markers = "extra=='cuda' and extra!='cpu'" }
+
+[tool.poetry.extras]
+cpu  = ["torch", "torchvision", "torchaudio"]
+cuda = ["torch", "torchvision", "torchaudio"]
+
+[[tool.poetry.source]]
+name     = "pytorch-cuda"
+priority = "explicit"
+url      = "https://download.pytorch.org/whl/cu126"
+
+[[tool.poetry.source]]
+name     = "pytorch-cpu"
+priority = "explicit"
+url      = "https://download.pytorch.org/whl/cpu"
+
+# ============ END OF TORCH PART ============
+# ===========================================
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires      = ["poetry-core"]
